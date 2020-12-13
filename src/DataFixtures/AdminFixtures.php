@@ -32,8 +32,9 @@ class AdminFixtures extends Fixture implements DependentFixtureInterface
                 ->setEmail($faker->Email)
                 ->setTelephone($faker->phoneNumber)
                 ->setAdresse($faker->address)
-                ->setStatut("actif")
+                ->setStatut(1)
                 ->setPhoto("image");
+
 
             $password = $this->encoder->encodePassword($user,'pass12345');
             $user->setPassword($password);

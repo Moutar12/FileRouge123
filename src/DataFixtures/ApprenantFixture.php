@@ -26,9 +26,9 @@ class ApprenantFixture extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
-        for ($i = 0; $i <= 3; $i++) {
+        for ($i = 0; $i <= 2; $i++) {
             $user = new Apprenant();
-            $profil = $this->getReference(ProfilFixtures::CM_USER_REFERENCE);
+            $profil = $this->getReference(ProfilFixtures::APPRENANT_USER_REFERENCE);
             $user->setProfil($profil)
                 ->setPrenom($faker->firstName)
                 ->setNom($faker->lastName)
@@ -36,7 +36,7 @@ class ApprenantFixture extends Fixture implements DependentFixtureInterface
                 ->setEmail($faker->Email)
                 ->setTelephone($faker->phoneNumber)
                 ->setAdresse($faker->address)
-                ->setStatut("actif")
+                ->setStatut(1)
                 ->setPhoto("image");
 
             $password = $this->encoder->encodePassword($user, 'pass12345');

@@ -22,19 +22,17 @@ class ProfilRepository extends ServiceEntityRepository
     // /**
     //  * @return Profil[] Returns an array of Profil objects
     //  */
-    /*
-    public function findByExampleField($value)
+/*
+    public function getlibelleProfil($value)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
+            ->andWhere('p.libelle = :val')
             ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+*/
 
     /*
     public function findOneBySomeField($value): ?Profil

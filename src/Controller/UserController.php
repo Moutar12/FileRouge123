@@ -3,30 +3,50 @@
 namespace App\Controller;
 
 use App\Entity\Admin;
+use App\Entity\Apprenant;
 use App\Entity\Cm;
+use App\Entity\Formateur;
+use App\Entity\Profil;
 use App\Entity\User;
+use App\Services\MyService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UserController extends AbstractController
 {
     /**
-     * UserController constructor.
+     * @var EntityManagerInterface
      */
-    private $encoder;
-    public function __construct(UserPasswordEncoderInterface $encoder){
-        $this->encoder = $encoder;
+    private EntityManagerInterface $manager;
+    /**
+     * @var ValidatorInterface
+     */
+    private ValidatorInterface $validator;
+
+    /**
+     * UserController constructor.
+     * @param EntityManagerInterface $manager
+     * @param ValidatorInterface $validator
+     */
+    public function __construct(EntityManagerInterface $manager,ValidatorInterface $validator)
+    {
+        $this->manager =$manager;
+        $this->validator =$validator;
     }
 
 
     /**
      * * @Route(
      *      name="adding",
+     *     methods={"POST"},
      *      path="/api/admin/users",
      *      defaults={
      *          "__controller"="App\Controller\UserController::addUser",
@@ -38,41 +58,38 @@ class UserController extends AbstractController
      *  )
      * @param Request $request
      * @param SerializerInterface $serializer
-     * @param UserPasswordEncoderInterface $encoder
+     * @param ValidatorInterface $validate
      * @param EntityManagerInterface $manager
+     * @param UserPasswordEncoderInterface $encoder
+     * @param MyService $myServices
+     * @param SerializerInterface $normalize
+     * @return JsonResponse
+     *
      */
-    public function addUser(Request $request,SerializerInterface $serializer, UserPasswordEncoderInterface $encoder, EntityManagerInterface $manager)
+    public function addFormateur(Request $request,SerializerInterface $serializer,ValidatorInterface $validate,EntityManagerInterface $manager,UserPasswordEncoderInterface $encoder, MyService $myServices,SerializerInterface $normalize)
     {
+        $userReq = $request->request->all();
+         //dd($userReq);
 
-        $user =$request->request->all();
-        dd($user['type']);
-        $avatar=$request->files->get("photo");
-        $avatar=fopen($avatar->getRealPath(),"r+");
-        if($user['type'] == "ADMIN"){
-            $data =  $serializer->denormalize($user,Admin::class);
-            $data->setPhoto($avatar);
-            $pass = 'pass12345';
-            $data->setPassword($encoder->encodePassword($data,$pass));
-            //$user->setPassword($password);
-            $manager->persist($data);
-        }elseif ($user['type'] == "CM"){
-            $data =  $serializer->denormalize($user,Cm::class);
-            $data->setPhoto($avatar);
-            $pass = 'pass12345';
-            $data->setPassword($encoder->encodePassword($data,$pass));
-            //$user->setPassword($password);
-
-            $manager->persist($data);
+        $userReq = $serializer->denormalize($userReq, "App\Entity\User");
+        //dd($userReq);
+        $errors=$validate->validate($userReq);
+        if(@count($errors))
+        {
+            $errors = $serializer->serialize($errors, "json");
+            return new JsonResponse($errors, Response::HTTP_BAD_REQUEST, [], true);
         }
+        $password="passer12345";
+        $userReq->setPassword($encoder->encodePassword($userReq,$password));
+        $userReq->setStatut(0);
 
+        //dd($myServices);
+        $avatar= $myServices->uploadImage($request);
 
-
+        $userReq->setPhoto($avatar);
+        $manager->persist($userReq);
         $manager->flush();
-
-        return $this->json("success");
+        return $this->json("User ajoute",Response::HTTP_CREATED);
 
     }
-
-
-
 }

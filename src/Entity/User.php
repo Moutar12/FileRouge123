@@ -7,9 +7,14 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
+use ApiPlatform\Core\Annotation\ApiSubresource;
 
 
 /**
@@ -17,54 +22,73 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *  @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"admin"="User","apprenant"="Apprenant", "cm"="Cm" , "formateur"="Formateur"})
+ * @ORM\DiscriminatorMap({"admin"="Admin","apprenant"="Apprenant", "cm"="Cm" ,"formateur"="Formateur", "user"="User"})
  * @ApiFilter(SearchFilter::class, properties={"statut": "partial"})
  * @ApiResource(
+ *
+ *     collectionOperations={
+ *     "addUser":{
+ *              "method":"POST",
+ *              "route_name"="adding",
+ *              "deserialize"=false,
+ *              "access_control"="(is_granted('ROLE_ADMIN') )",
+ *              "access_control_message"="Vous n'avez pas access à cette Ressource",
+ *               },
+ *
+ *      "get_users":{
+ *              "method":"GET",
+ *              "path":"/admin/users",
+ *              "normalization_context"={"groups"="users:read"},
+ *              "access_control"="(is_granted('ROLE_ADMIN') )",
+ *              "access_control_message"="Vous n'étes pas autorisé à cette Ressource",
+ *     },
+ *
+ *     },
+ *
  *    itemOperations={
  *       "get_admin":{
  *              "method":"GET",
  *              "path":"/admin/users/{id}",
+ *              "normalization_context"={"groups"="usersid:read"},
  *              "access_control"="(is_granted('ROLE_ADMIN') )",
  *              "access_control_message"="Vous n'étes pas autorisé à cette Ressource",
  *     },
  *     "put_admin":{
  *              "method":"PUT",
  *              "path":"/admin/users/{id}",
+ *              "normalization_context"={"groups"="usersPut:read"},
  *              "access_control"="(is_granted('ROLE_ADMIN') )",
  *              "access_control_message"="Vous n'étes pas autorisé à cette Ressource",
  *     },
  *     },
- *     collectionOperations={
- *      "get":{
- *              "path":"/admin/users",
- *              "access_control"="(is_granted('ROLE_ADMIN') )",
- *              "access_control_message"="Vous n'étes pas autorisé à cette Ressource",
- *     },
- *     "addUser":{
- *              "method":"POST",
- *              "route_name"="add",
- *              "deserialize"=false,
- *              "access_control"="(is_granted('ROLE_ADMIN') )",
- *              "access_control_message"="Vous n'avez pas access à cette Ressource",
- *               },
- *     },
+ *
  *
  *
  * )
  */
 class User implements UserInterface
 {
+
+    public function __construct($statut=null)
+    {
+        $this->statut=true;
+        $this->chats = new ArrayCollection();
+    }
+
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"profil:read","id1:read","profil_put:read"})
+     * @Groups({"id1:read","profil_put:read","groupeApp:read","users:read","groupe:read","groupes:write"})
+     *
      */
-    private $id;
+    protected $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"profil:read","id1:read","profil_put:read"})
+     * @ORM\Column(type="string", length=180, unique=true,)
+     * @Groups({"id1:read","profil_put:read","users:read","appnt_id:read"})
+     *
      */
     private $username;
 
@@ -74,46 +98,64 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     *
+     *
      */
     private $password;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Profil::class, inversedBy="users")
-     *
-     */
-    private $profil;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"profil:read","id1:read","profil_put:read"})
+     * @Groups({"users:read","groupe:read","appnt_id:read"})
+     *
+     *
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"profil:read","id1:read","profil_put:read"})
+     * @Groups({"users:read","groupe:read","groupeApp:read","appnt_id:read"})
+     *
+     *
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\Email(message="Email invalid")
+     * @Groups({"users:read","groupe:read","appnt_id:read"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Groups({"users:read","groupe:read","appnt_id:read"})
+     *
      */
     private $telephone;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Groups({"users:read","groupe:read","groupeApp:read","appnt_id:read"})
+     *
      */
     private $adresse;
 
+
+
+
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToMany(targetEntity=Chat::class, mappedBy="user")
      */
-    private $statut;
+    private $chats;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Profil::class, inversedBy="users")
+     */
+    private $profil;
 
     /**
      * @ORM\Column(type="blob")
@@ -193,17 +235,7 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getProfil(): ?Profil
-    {
-        return $this->profil;
-    }
 
-    public function setProfil(?Profil $profil): self
-    {
-        $this->profil = $profil;
-
-        return $this;
-    }
 
     public function getPrenom(): ?string
     {
@@ -265,14 +297,60 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getStatut(): ?string
+
+
+
+
+    public function getStatut(): ?bool
     {
         return $this->statut;
     }
 
-    public function setStatut(string $statut): self
+    public function setStatut(bool $statut): self
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getProfil(): ?Profil
+    {
+        return $this->profil;
+    }
+
+    public function setProfil(?Profil $profil): self
+    {
+        $this->profil = $profil;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Chat[]
+     */
+    public function getChats(): Collection
+    {
+        return $this->chats;
+    }
+
+    public function addChat(Chat $chat): self
+    {
+        if (!$this->chats->contains($chat)) {
+            $this->chats[] = $chat;
+            $chat->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChat(Chat $chat): self
+    {
+        if ($this->chats->removeElement($chat)) {
+            // set the owning side to null (unless already changed)
+            if ($chat->getUser() === $this) {
+                $chat->setUser(null);
+            }
+        }
 
         return $this;
     }

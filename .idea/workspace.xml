@@ -1,7 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="4af1eead-da7e-4c9a-963d-a00b487d0d7f" name="Default Changelist" comment="" />
+    <list default="true" id="4af1eead-da7e-4c9a-963d-a00b487d0d7f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Datapersister/ProfilDataPersister.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Services/MyService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/AdminFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/AdminFixtures.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/ApprenantFixture.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/ApprenantFixture.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/CmFixture.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/CmFixture.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/FormateurFixture.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/FormateurFixture.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/ProfilFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/ProfilFixtures.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Apprenant.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Apprenant.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Formateur.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Formateur.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Profil.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Profil.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ProfilRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ProfilRepository.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +52,9 @@
         <option value="composer.json" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -116,7 +154,9 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -127,7 +167,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -145,49 +185,55 @@
       <workItem from="1605858840631" duration="29664000" />
       <workItem from="1605949139518" duration="686000" />
       <workItem from="1606117862774" duration="2610000" />
-      <workItem from="1606121033788" duration="4555000" />
+      <workItem from="1606121033788" duration="9476000" />
+      <workItem from="1606134433590" duration="10336000" />
+      <workItem from="1606204789117" duration="1671000" />
+      <workItem from="1606207050565" duration="24805000" />
+      <workItem from="1606291091201" duration="245000" />
+      <workItem from="1606291345864" duration="21733000" />
+      <workItem from="1606384553823" duration="66000" />
+      <workItem from="1606384629934" duration="124000" />
+      <workItem from="1606384765905" duration="24603000" />
+      <workItem from="1606560453702" duration="679000" />
+      <workItem from="1606561987078" duration="109000" />
+      <workItem from="1606562107217" duration="5770000" />
+      <workItem from="1606586710778" duration="18000" />
+      <workItem from="1606586738358" duration="4587000" />
+      <workItem from="1606608368533" duration="4219000" />
+      <workItem from="1606650861939" duration="9199000" />
+      <workItem from="1606675061060" duration="3024000" />
+      <workItem from="1606830118822" duration="401000" />
+      <workItem from="1606844309523" duration="1288000" />
+      <workItem from="1606895397676" duration="31930000" />
+      <workItem from="1606982714839" duration="1181000" />
+      <workItem from="1606985486590" duration="11563000" />
+      <workItem from="1607000298852" duration="10942000" />
+      <workItem from="1607018387980" duration="9057000" />
+      <workItem from="1607070079212" duration="22183000" />
+      <workItem from="1607103712404" duration="9737000" />
+      <workItem from="1607171534872" duration="599000" />
+      <workItem from="1607248862092" duration="10937000" />
+      <workItem from="1607295186974" duration="599000" />
+      <workItem from="1607339915706" duration="682000" />
+      <workItem from="1607682832206" duration="1488000" />
+      <workItem from="1607760130257" duration="1565000" />
+      <workItem from="1607770767825" duration="633000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="621" y="221" width="740" height="672" key="#Inspections" timestamp="1605821005396">
-      <screen x="72" y="27" width="1848" height="1053" />
-    </state>
-    <state x="621" y="221" width="740" height="672" key="#Inspections/72.27.1848.1053@72.27.1848.1053" timestamp="1605821005396" />
-    <state x="491" y="134" width="1000" height="909" key="#Intentions" timestamp="1605821369180">
-      <screen x="72" y="27" width="1848" height="1053" />
-    </state>
-    <state x="491" y="134" width="1000" height="909" key="#Intentions/72.27.1848.1053@72.27.1848.1053" timestamp="1605821369180" />
-    <state x="450" y="204" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605778359514">
-      <screen x="72" y="27" width="1848" height="1053" />
-    </state>
-    <state x="450" y="204" key="#com.intellij.execution.impl.EditConfigurationsDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1605778359514" />
-    <state x="742" y="166" width="498" height="796" key="#com.intellij.ide.util.MemberChooser" timestamp="1605727233592">
-      <screen x="72" y="27" width="1848" height="1053" />
-    </state>
-    <state x="742" y="166" width="498" height="796" key="#com.intellij.ide.util.MemberChooser/72.27.1848.1053@72.27.1848.1053" timestamp="1605727233592" />
-    <state x="663" y="254" width="655" height="605" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1605799510489">
-      <screen x="72" y="27" width="1848" height="1053" />
-    </state>
-    <state x="663" y="254" width="655" height="605" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1605799510489" />
-    <state x="690" y="224" width="601" height="686" key="NewPhpClassDialog" timestamp="1605870691886">
-      <screen x="72" y="27" width="1848" height="1053" />
-    </state>
-    <state x="690" y="224" width="601" height="686" key="NewPhpClassDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1605870691886" />
-    <state x="360" y="101" width="1271" height="912" key="SettingsEditor" timestamp="1605787632190">
-      <screen x="72" y="27" width="1848" height="1053" />
-    </state>
-    <state x="360" y="101" width="1271" height="912" key="SettingsEditor/72.27.1848.1053@72.27.1848.1053" timestamp="1605787632190" />
-    <state x="576" y="248" key="run.anything.popup" timestamp="1605712879950">
-      <screen x="72" y="27" width="1848" height="1053" />
-    </state>
-    <state x="576" y="248" key="run.anything.popup/72.27.1848.1053@72.27.1848.1053" timestamp="1605712879950" />
-    <state x="575" y="45" width="840" height="1034" key="search.everywhere.popup" timestamp="1605871575566">
-      <screen x="72" y="27" width="1848" height="1053" />
-    </state>
-    <state x="575" y="45" width="840" height="1034" key="search.everywhere.popup/72.27.1848.1053@72.27.1848.1053" timestamp="1605871575566" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
