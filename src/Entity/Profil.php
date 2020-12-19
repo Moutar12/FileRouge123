@@ -87,6 +87,7 @@ class Profil
 
     public function __construct()
     {
+        $this->archive = true;
         $this->users = new ArrayCollection();
     }
 
