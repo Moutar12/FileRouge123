@@ -25,7 +25,6 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
  * @ORM\DiscriminatorMap({"admin"="Admin","apprenant"="Apprenant", "cm"="Cm" ,"formateur"="Formateur", "user"="User"})
  * @ApiFilter(SearchFilter::class, properties={"statut": "partial"})
  * @ApiResource(
- *
  *     collectionOperations={
  *     "addUser":{
  *              "method":"POST",
@@ -80,14 +79,14 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"id1:read","profil_put:read","groupeApp:read","users:read","groupe:read","groupes:write"})
+     * @Groups({"id1:read","profil_put:read","groupeApp:read","users:read","groupe:read","groupes:write","usersid:read","profil_id:read"})
      *
      */
     protected $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true,)
-     * @Groups({"id1:read","profil_put:read","users:read","appnt_id:read"})
+     * @Groups({"id1:read","profil_put:read","users:read","appnt_id:read","usersid:read"})
      *
      */
     private $username;
@@ -106,7 +105,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"users:read","groupe:read","appnt_id:read"})
+     * @Groups({"users:read","groupe:read","appnt_id:read","usersid:read","profil_id:read"})
      *
      *
      */
@@ -114,7 +113,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"users:read","groupe:read","groupeApp:read","appnt_id:read"})
+     * @Groups({"users:read","groupe:read","groupeApp:read","appnt_id:read","usersid:read","profil_id:read"})
      *
      *
      */
@@ -124,14 +123,14 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      *
      * @Assert\Email(message="Email invalid")
-     * @Groups({"users:read","groupe:read","appnt_id:read"})
+     * @Groups({"users:read","groupe:read","appnt_id:read","usersid:read","profil_id:read"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @Groups({"users:read","groupe:read","appnt_id:read"})
+     * @Groups({"users:read","groupe:read","appnt_id:read","profil_id:read"})
      *
      */
     private $telephone;
@@ -139,7 +138,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @Groups({"users:read","groupe:read","groupeApp:read","appnt_id:read"})
+     * @Groups({"users:read","groupe:read","groupeApp:read","appnt_id:read","usersid:read","profil_id:read"})
      *
      */
     private $adresse;
@@ -154,11 +153,13 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToOne(targetEntity=Profil::class, inversedBy="users")
+     * @Groups({"users:read","groupe:read","groupeApp:read","appnt_id:read","usersid:read"})
      */
     private $profil;
 
     /**
      * @ORM\Column(type="blob")
+     * @Groups({"users:read","groupe:read","groupeApp:read","appnt_id:read","usersid:read","profil_id:read"})
      */
     private $photo;
 
@@ -357,7 +358,14 @@ class User implements UserInterface
 
     public function getPhoto()
     {
-        return $this->photo;
+        if($this->photo !== null){
+            return base64_encode(stream_get_contents($this->photo));
+        }else
+        {
+            return $this->photo;
+        }
+
+        
     }
 
     public function setPhoto($photo): self

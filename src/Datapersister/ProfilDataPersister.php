@@ -35,7 +35,6 @@ final class ProfilDataPersister implements ContextAwareDataPersisterInterface
         $data->setArchive(0);
         $this->manager->persist($data);
         $this->manager->flush();
-
         return $data;
     }
 }

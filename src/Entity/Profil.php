@@ -15,13 +15,20 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=ProfilRepository::class)
  * @UniqueEntity("libelle", message="Ce champ doit etre unique")
  * @ApiResource(
- *     attributes={"pagination_items_per_page"=3},
  *     itemOperations={
  *      "get_user_profil":{
  *      "method":"get",
  *      "path":"/admin/profils/{id}",
  *      "normalization_context"={"groups":"id1:read"},
  *     },
+ * "get1":{
+ *              "method":"GET",
+ *              "path":"/admin/profils/{id}/users",
+ *              "normalization_context"={"groups":"profil_id:read"},
+ *              "access_control"="(is_granted('ROLE_ADMIN'))",
+ *              "access_control_message"="Vous n'étes pas autorisé à cette ressource"
+ *     },
+ * 
  *     "put_user_profil":{
  *      "method":"put",
  *      "path":"/admin/profils/{id}",
@@ -62,13 +69,13 @@ class Profil
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     *@Groups({"profil:read","id1:read","profil_put:read"})
+     *@Groups({"users:read","profil:read","id1:read","profil_put:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"profil:read","id1:read","profil_put:read"})
+     * @Groups({"users:read","profil:read","id1:read","profil_put:read","profil_id:read"})
      *
      */
     private $libelle;
@@ -82,6 +89,7 @@ class Profil
 
     /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="profil")
+     * @Groups({"profil_id:read"})
      */
     private $users;
 
