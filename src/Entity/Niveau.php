@@ -17,6 +17,7 @@ class Niveau
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"cmptcs:read","cmptc:write","cmptcs1:read"})
      */
     private $id;
 
@@ -39,6 +40,7 @@ class Niveau
 
     /**
      * @ORM\ManyToOne(targetEntity=Competence::class, inversedBy="niveau")
+     *
      */
     private $competence;
 

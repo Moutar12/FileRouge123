@@ -68,7 +68,7 @@ class Competence
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"cmptcs:read","cmptc:write","cmptcs1:read","grpcmptcs1:read","grpcmptcs2:read","grpcmptcs3:read","grcreferenciel:read"})
+     * @Groups({"grpcmptcs:read","cmptcs:read","cmptc:write","cmptcs1:read","grpcmptcs1:read","grpcmptcs2:read","grpcmptcs3:read","grcreferenciel:read"})
      */
     private $libelle;
 
@@ -81,6 +81,11 @@ class Competence
      * )
      */
     private $niveau;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $description;
 
     public function __construct()
     {
@@ -159,6 +164,18 @@ class Competence
                 $niveau->setCompetence(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

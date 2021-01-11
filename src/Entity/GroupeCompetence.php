@@ -68,19 +68,20 @@ class GroupeCompetence
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"grpcmptcs3:read","referentiel:write","referenciel:read","grcreferenciel:read"})
+     * @Groups({"grpcmptcs:read","grpcmptcs3:read","referentiel:write","referenciel:read","grcreferenciel:read"})
      */
     private $id;
 
     /**
      * @ORM\ManyToMany(targetEntity=Competence::class, inversedBy="groupeCompetences",cascade={"persist"})
-     *  @Groups({"grpcmptcs:read","grpcmptcs1:read","grpcmptcs2:read","grpcmptcs3:read","grpcmptcs:write","grcreferenciel:read"})
+     *  @Groups({"grpcmptcs:read","cmptcs1:read","grpcmptcs1:read","grpcmptcs2:read","grpcmptcs3:read","grpcmptcs:write","grcreferenciel:read"})
      */
     private $competence;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"grpcmptcs1:read","grpcmptcs3:read","grpcmptcs:write","referenciel:read","grcreferenciel:read"})
+     * @Groups({"grpcmptcs:read","grpcmptcs1:read","grpcmptcs3:read","grpcmptcs:write",
+     *   "referenciel:read","grcreferenciel:read"})
      */
     private $libelle;
 
@@ -89,6 +90,18 @@ class GroupeCompetence
      * @Groups({"referenciel:read"})
      */
     private $referentiels;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *@Groups({"grpcmptcs:read","grpcmptcs1:read","grpcmptcs3:read","grpcmptcs:write",
+     *   "referenciel:read","grcreferenciel:read"})
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $statut = 0;
 
     public function __construct()
     {
@@ -160,6 +173,30 @@ class GroupeCompetence
         if ($this->referentiels->removeElement($referentiel)) {
             $referentiel->removeGroupeCompetence($this);
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getStatut(): ?bool
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(bool $statut): self
+    {
+        $this->statut = $statut;
 
         return $this;
     }

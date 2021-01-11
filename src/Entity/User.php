@@ -52,13 +52,13 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
  *              "access_control"="(is_granted('ROLE_ADMIN') )",
  *              "access_control_message"="Vous n'étes pas autorisé à cette Ressource",
  *     },
- *     "put_admin":{
- *              "method":"PUT",
+ *     "updateUser":{
+ *              "method":"put",
+ *              "route_name"="putUserId",
  *              "path":"/admin/users/{id}",
- *              "normalization_context"={"groups"="usersPut:read"},
  *              "access_control"="(is_granted('ROLE_ADMIN') )",
- *              "access_control_message"="Vous n'étes pas autorisé à cette Ressource",
- *     },
+ *              "deserialize"= false,
+ *          },
  *     },
  *
  *
@@ -67,13 +67,11 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
  */
 class User implements UserInterface
 {
-
-    public function __construct($statut=null)
+ public function __construct($statut=null)
     {
         $this->statut=true;
         $this->chats = new ArrayCollection();
     }
-
 
     /**
      * @ORM\Id
@@ -95,7 +93,7 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @var string The hashed password
+     *@var string The hashed password
      * @ORM\Column(type="string")
      *
      *
@@ -158,10 +156,17 @@ class User implements UserInterface
     private $profil;
 
     /**
-     * @ORM\Column(type="blob")
+     * @ORM\Column(type="blob", nullable=true)
      * @Groups({"users:read","groupe:read","groupeApp:read","appnt_id:read","usersid:read","profil_id:read"})
      */
     private $photo;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $statut = 0;
+
+
 
     public function getId(): ?int
     {
@@ -299,21 +304,6 @@ class User implements UserInterface
     }
 
 
-
-
-
-    public function getStatut(): ?bool
-    {
-        return $this->statut;
-    }
-
-    public function setStatut(bool $statut): self
-    {
-        $this->statut = $statut;
-
-        return $this;
-    }
-
     public function getProfil(): ?Profil
     {
         return $this->profil;
@@ -374,4 +364,19 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getStatut(): ?bool
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(?bool $statut): self
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
+
+
 }
