@@ -1,0 +1,61 @@
+Documentations Symfony
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Aprés clonage du projet
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+-Il faut extraire le fichier FilesRouge.sql et charger le dans mysq
+
+-faire un composer install ou composer update pour installer les dépendances
+
+-Créer les clé de connexion avec 
+
+*mkdir config/jwt
+
+*openssl genrsa -out config/jwt/private.pem -aes256 4096
+
+*openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem
+
+- Lancer le server de symfony avec :
+
+*  symfony serve
+
+*  php -S localhost:8000 -t public
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Les données de connexion sont:
+
+ username et password
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Documentation Angular
+
+
+Apres clonage :
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+-Installation des dépendance
+
+  Npm install
+
+-Pour allumer le serveur
+
+Ng serve
+
+-Se connecter avec le username et le mot de passe
