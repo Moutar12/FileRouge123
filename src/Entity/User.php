@@ -14,8 +14,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-use ApiPlatform\Core\Annotation\ApiSubresource;
-
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -52,13 +50,19 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
  *              "access_control"="(is_granted('ROLE_ADMIN') )",
  *              "access_control_message"="Vous n'étes pas autorisé à cette Ressource",
  *     },
- *     "updateUser":{
- *              "method":"put",
- *              "route_name"="putUserId",
- *              "path":"/admin/users/{id}",
+ *     "updateUser"={
+ *              "method"="put",
+ *                
  *              "access_control"="(is_granted('ROLE_ADMIN') )",
  *              "deserialize"= false,
  *          },
+ *    "delete_users":{
+ *      "method"="DELETE",
+ *      "path":"/admin/users/{id}",
+ *      "normalization_context"={"groups":"profil_put:read"},
+ *      "access_control"="(is_granted('ROLE_ADMIN'))",
+ *      "access_control_message"="Vous n'étes pas autorisé à cette ressource"
+ *     }
  *     },
  *
  *
@@ -142,8 +146,6 @@ class User implements UserInterface
     private $adresse;
 
 
-
-
     /**
      * @ORM\OneToMany(targetEntity=Chat::class, mappedBy="user")
      */
@@ -164,7 +166,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $statut = 0;
+    private $statut;
 
 
 

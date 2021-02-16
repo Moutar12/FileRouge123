@@ -35,6 +35,10 @@ class UserController extends AbstractController
      */
     private ValidatorInterface $validator;
 
+    private $encode;
+
+    private $repo;
+
     /**
      * UserController constructor.
      * @param EntityManagerInterface $manager
@@ -110,7 +114,7 @@ public function addUser(MyService $myServices, Request $request)
         $utili = $myServices->addNewUser($type, $request);
         //$this->validator->validatePost($utili);
 
-        $utili->setStatut(false);
+        $utili->setStatut(true);
         $this->manager->persist($utili);
         $this->manager->flush();
         //$this->MyserviceEmail->send($utili->getEmail(), "User ajouté", 'Avec succes');
@@ -125,28 +129,36 @@ public function addUser(MyService $myServices, Request $request)
              *     methods={"PUT"},
              *     defaults={
              *      "_api_resource_class"=User::class,
-             *      "_api_item_operation_name"="putUserId"
+             *      "_api_item_operation_name"="updateUser"
              *     }
              *     )
              */
-  public function updateUser(ServicePhoto $myServices, Request $request){
-                $profil = $request->get('profil');
-                $updateUser = $myServices->gererPhoto($request, 'photo');
-                $utili = $request->attributes->get('data');
-                foreach($updateUser as $key => $val){
-                $setter = 'set'.ucfirst(strtolower($key));
-                if(method_exists(User::class, $setter)){
-                if($setter == 'setProfil'){
-                $utili->setProfil($updateUser['profil']);
-                }else{
-                $utili->$setter($val);
+public function updateUser(ServicePhoto $myServices, Request $request){
+        
+        $updateUser = $myServices->gererPhoto($request, 'photo');
+        unset($updateUser['photo']);
+        //dd($updateUser );
+        $utili = $request->attributes->get('data');
+        foreach ($updateUser as $key => $val) {
+            $setter = 'set'.ucfirst(strtolower(explode(';', $key)[1]));
+            if (method_exists(User::class, $setter)) {
+                if ($setter == 'setProfil') {
+                 $profil = $this->profilRepository->findByLibelle($val);
+                    $utili->setProfil($profil[0]);
+                } else {
+                    $utili->$setter($val);
                 }
-                if($setter == 'setPassword'){
-                $utili->setPassword($this->encoder->encodePassword($utili, $updateUser['password']));
+                if ($setter == 'setPassword') {
+                    $utili->setPassword($this->encode->encodePassword($utili, $utili->getPassword()));
                 }
-                }
-                $this->manager->persist($utili);
-                $this->manager->flush();
-                return new JsonResponse("Success", 200, [], true);                }
-             }
+            }
+        }
+        
+        $this->manager->persist($utili);
+
+        $this->manager->flush($utili);
+
+        return new JsonResponse("Success", 200, [], true);                
+             
+}
 }

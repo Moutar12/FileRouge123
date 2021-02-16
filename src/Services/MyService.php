@@ -62,7 +62,7 @@ class MyService
         }
         $newUser = $this->serializer->denormalize($users, $user);
         $newUser->setProfil($this->profilRepository->findOneBy(['libelle' => $profil]));
-        $newUser->setStatut(true);
+        $newUser->setStatut(false);
         $password="pass12345";
         $newUser->setPassword($this->encoder->encodePassword($newUser, $password));
         return $newUser;

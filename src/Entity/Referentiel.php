@@ -12,25 +12,52 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=ReferentielRepository::class)
  * @ApiResource (
- *collectionOperations={
- *              "get_referenciel"={
- *                  "method"="GET",
- *                  "normalizationContext"={"groups":{"referenciel:read"}},
- *                  "path"="/admin/referentiels",
- *
- *               },
- *             "post_referenciel"={
- *                   "method"="POST",
- *                   "path"="/admin/referentiels",
- *                   "denormalization_context"={"groups"={"referentiel:write"}}
- *              },
- *
- *             "get_groupe_competence"={
+*collectionOperations={
+* "getAllReferenciel"={
+*      "method":"GET",
+ *     "path":"/admin/referenciels",
+ *      "normalizationContext"={"groups":{"referenciel:read"}},
+ *       "access_control"="(is_granted('ROLE_ADMIN') )",
+ *     },
+ *  "addReferentiel":{
+ *        "method":"POST",
+ *        "route_name"="postRef",
+ *         "denormalizationContext"={"groups"={"referenciel:write"}},
+ *         "access_control"="(is_granted('ROLE_ADMIN') )",
+ *         "access_control_message"="Vous n'avez pas access à cette Ressource",
+ *     },
+ *                   
+ *           
+ *          "get_groupe_competence_ref"={
  *                          "method"="GET",
- *                          "normalizationContext"={"groups":{"grcreferenciel:read"}},
+ *                          "normalizationContext"={"groups":{"grcreferenciels:read"}},
  *                          "path"="/admin/referentiels/grpecompetences",
  *
  *     },
+ *     },
+ *  itemOperations={
+ *  "ref_id"={
+ *             "method"="GET",
+ *             "normalizationContext"={"groups":{"grcreferenciel:read"}},
+ *             "path"="/admin/referentiels/{id}",
+ *     },
+ *     "ref_grcomp_id"={
+ *             "method"="GET",
+ *             "normalizationContext"={"groups":{"grcreferenciel_id:read"}},
+ *             "path"="/admin/referentiels/{id_1}/grpecompetences/{id}",
+ *     },
+ * "editeReferentiel":{
+ *        "method":"PUT",
+ *        "route_name"="puttRef",
+ *         "denormalizationContext"={"groups"={"referenciel:write"}},
+ *         "access_control"="(is_granted('ROLE_ADMIN') )",
+ *         "access_control_message"="Vous n'avez pas access à cette Ressource",
+ *     },
+ * "sup_ref"={
+ *             "method"="Delete",
+ *             "path"="/admin/referentiels/{id}",
+ *     },
+ *  
  *     }
  * )
  */
@@ -40,31 +67,67 @@ class Referentiel
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups ({"referenciel:read","grcreferenciel:read"})
+     * @Groups ({"referentiel:write","grcreferenciels:read",
+     *    "grcreferenciel:read","referenciel:write","supreferenciel:read"})
      */
     private $id;
-
+    
+ 
+ /**
+  * @ORM\Column(type="string", length=255)
+  * @Groups({"referenciel:read","referentiel:write","grcreferenciels:read","grcreferenciel:read",
+  *          "grcreferenciel_id:read","referenciel:write"})
+  */
+ private $presentation;
+ 
+ /**
+  * @ORM\Column(type="string", length=255)
+  * @Groups({"referenciel:read","referentiel:write","grcreferenciels:read","grcreferenciel:read",
+  *          "grcreferenciel_id:read","referenciel:write"})
+  */
+ private $critereEvaluation;
+ 
+ /**
+  * @ORM\Column(type="string", length=255)
+  * @Groups({"referenciel:read","referentiel:write","grcreferenciels:read","grcreferenciel:read",
+  *          "grcreferenciel_id:read","referenciel:write"})
+  */
+ private $critereAdmission;
+ 
+ 
+ 
+ /**
+  * @ORM\Column(type="string", length=255)
+  * @Groups({"referenciel:read","referentiel:write","grcreferenciels:read","grcreferenciel:read",
+  *          "grcreferenciel_id:read","referenciel:write"})
+  */
+ private $libelle;
     /**
      * @ORM\ManyToMany(targetEntity=Promo::class, mappedBy="referentiel")
      */
     private $promos;
-
+    
     /**
      * @ORM\OneToMany(targetEntity=CompetencesValides::class, mappedBy="referentiel")
      */
     private $competencesValides;
-
+    
     /**
      * @ORM\ManyToMany(targetEntity=GroupeCompetence::class, inversedBy="referentiels")
-     * @Groups({"referentiel:write","referenciel:read","grcreferenciel:read"})
+     * @Groups({"referenciel:read","referentiel:write","grcreferenciels:read","grcreferenciel:read",
+     *      "grcreferenciel_id:read","referenciel:write"})
      */
     private $groupeCompetence;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"referentiel:write","referenciel:read","grcreferenciel:read"})
+     * @ORM\Column(type="blob")
+     * @Groups({"referentiel:write","grcreferenciels:read","grcreferenciel:read",
+     *      "grcreferenciel_id:read","referenciel:write"})
      */
-    private $libelle;
+    private $programme;
+
+
+
 
     public function __construct()
     {
@@ -77,7 +140,55 @@ class Referentiel
     {
         return $this->id;
     }
+    
+    public function getPresentation(): ?string
+    {
+        return $this->presentation;
+    }
 
+    public function setPresentation(string $presentation): self
+    {
+        $this->presentation = $presentation;
+
+        return $this;
+    }
+
+    public function getCritereEvaluation(): ?string
+    {
+        return $this->critereEvaluation;
+    }
+
+    public function setCritereEvaluation(string $critereEvaluation): self
+    {
+        $this->critereEvaluation = $critereEvaluation;
+
+        return $this;
+    }
+
+    public function getCritereAdmission(): ?string
+    {
+        return $this->critereAdmission;
+    }
+
+    public function setCritereAdmission(string $critereAdmission): self
+    {
+        $this->critereAdmission = $critereAdmission;
+
+        return $this;
+    }
+
+   
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    public function setLibelle(string $libelle): self
+    {
+        $this->libelle = $libelle;
+
+        return $this;
+    }
     /**
      * @return Collection|Promo[]
      */
@@ -159,15 +270,26 @@ class Referentiel
         return $this;
     }
 
-    public function getLibelle(): ?string
+    public function getProgramme()
     {
-        return $this->libelle;
+        if($this->programme !== null){
+            return base64_encode(stream_get_contents($this->programme));
+        }else
+        {
+           return $this->programme;
+        }
+        
     }
 
-    public function setLibelle(string $libelle): self
+    public function setProgramme($programme): self
     {
-        $this->libelle = $libelle;
+        $this->programme = $programme;
 
         return $this;
     }
+
+    
+
+
+   
 }

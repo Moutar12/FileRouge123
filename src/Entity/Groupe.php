@@ -24,7 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      "Get_groupe":{
  *      "method":"GET",
  *      "path":"/admin/groupes",
- *      "normalization_context"={"groups"="groupe:read"},
+ *      "normalization_context"={"groups"={"groupe:read"}},
  *      "access_control"="(is_granted('ROLE_ADMIN') )",
  *      "access_control_message"="Vous n'étes pas autorisé à cette Ressource",
  *     },
@@ -32,7 +32,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *  "Get_groupe_App":{
  *      "method":"GET",
  *      "path":"/admin/groupes/apprenants",
- *      "normalization_context"={"groups"="groupeApp:read"},
+ *      "normalization_context"={"groups"={"groupeApp:read"}},
  *      "access_control"="(is_granted('ROLE_ADMIN') )",
  *      "access_control_message"="Vous n'étes pas autorisé à cette Ressource",
  *     },
@@ -42,24 +42,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *  "Delete_groupe_App":{
  *      "method":"Delete",
  *      "path":"admin/groupes/{id_1}/apprenants/{id}",
- *      "normalization_context"={"groups"="groupedelete:read"},
+ *      "normalization_context"={"groups"={"groupedelete:read"}},
  *
  *     },
  *
  * "Get_groupe_App_id":{
  *      "method":"GET",
  *      "path":"/admin/groupes/{id}",
- *      "normalization_context"={"groups"="groupe_app_id:read"},
+ *      "normalization_context"={"groups"="{groupe_app_id:read"}},
  *
  *     },
  *
- *"Put_groupe":{
- *      "method":"PUT",
- *      "path":"/admin/groupes/{id}",
- *      "normalization_context"={"groups"="groupe_put:read"},
- *
- *     },
- *     }
  * )
  */
 class Groupe

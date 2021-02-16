@@ -12,7 +12,7 @@ class PromoFixture extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $promo = ["promo1","promo2","promo3"];
+       /*  $promo = ["promo1","promo2","promo3"];
         foreach ($promo as $key => $libelle){
             if ($libelle == "promo1"){
                 $promos = new Promo();
@@ -43,6 +43,6 @@ class PromoFixture extends Fixture
             }
         }
 
-        $manager->flush();
+        $manager->flush(); */
     }
 }

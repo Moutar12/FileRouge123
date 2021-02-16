@@ -24,28 +24,37 @@ public function __construct(UserPasswordEncoderInterface $encoder, SerializerInt
    public function gererPhoto(Request $request, string $fileName = null ): array{
     $avartar = $request->getContent();
     $delimit = "multipart/form-data; boundary=";
-    $boundary = "--".explode($delimit, $request->Headers->get('content-type'))[1];
+    $boundary = "--".explode($delimit, $request->headers->get('content-type'))[1];
     $elements = str_replace([$boundary, 'content-dispostion: form-data;', "name="], "", $avartar);
     $elementsTab = explode("\r\n\r\n", $elements);
     $data = [];
-    for($i = 0; isset($elementsTab[$i+1]); $i = +2){
-    $key = str_replace(["\r\n", '"', '"'], '', $elementsTab[$i]);
-    if(strchr($key, $fileName)){
-    $stream = fopen('php://memory', 'r+');
-    dd($stream);
-    fwrite($stream, $elementsTab[$i + 1]);
-    rewind($stream);
-    $data[$fileName] = $stream;
+   $elementsTab = explode("\r\n\r\n", $elements);
+        //dd($elementsTab);
+        $data = [];
+        for ($i = 0; isset($elementsTab[$i + 1]); $i += 2) {
+            //dd($elementsTab[$i+1]);
+            $key = str_replace(["\r\n", ' "', '"'], '', $elementsTab[$i]);
+            //dd($key);
+            if (strchr($key, $fileName)) {
+                $stream = fopen('php://memory', 'r+');
+                //dd($stream);
+                fwrite($stream, $elementsTab[$i + 1]);
+                rewind($stream);
+                $data[$fileName] = $stream;
+                //dd($data);
+            } else {
+                $val = $elementsTab[$i + 1];
+                $val = str_replace(["\r\n", "--"],'',$elementsTab[$i+1]);
+                //dd($val);
+                $data[$key] = $val;
+                // dd($data[$key]);
+            }
+        }
+    if (isset($data['profil'])) {
+        $profils = $this->profilrepository->findOneBy(['libelle'=>$data["profil"]]);
+        $data["profil"] = $profils;   
     }
-    else
-    {
-        $val = $elementsTab[$i + 1];
-        $data[$key] = $val;
-    }
-    }
-    $profils = $this->profilrepository->findOneBy(['libelle'=>$data["profil"]]);
-       $data["profil"] = $profils;
-       return $data;
+    return $data;
    }
 
 

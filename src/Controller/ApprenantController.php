@@ -61,28 +61,32 @@ class ApprenantController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function addApprenant(Request $request,SerializerInterface $serializer,ValidatorInterface $validate,EntityManagerInterface $manager,UserPasswordEncoderInterface $encoder, MyService $myServices)
+    public function addApprenant(Request $request,EntityManagerInterface $manager, MyService $myServices)
     {
-        $userReq = $request->request->all();
-        //dd($userReq);
-        $userReq = $serializer->denormalize($userReq, "App\Entity\Apprenant");
-        //dd($userReq);
-        $errors=$validate->validate($userReq);
-        if(@count($errors))
-        {
-            $errors = $serializer->serialize($errors, "json");
-            return new JsonResponse($errors, Response::HTTP_BAD_REQUEST, [], true);
-        }
-        $password="passer12345";
-        $userReq->setPassword($encoder->encodePassword($userReq,$password));
-        $userReq->setStatut(0);
-        //dd($myServices);
-        $avatar= $myServices->uploadImage($request);
+        // $userReq = $request->request->all();
+        // //dd($userReq);
+        // $userReq = $serializer->denormalize($userReq, "App\Entity\Apprenant");
+        // //dd($userReq);
+        // $errors=$validate->validate($userReq);
+        // if(@count($errors))
+        // {
+        //     $errors = $serializer->serialize($errors, "json");
+        //     return new JsonResponse($errors, Response::HTTP_BAD_REQUEST, [], true);
+        // }
+        // $password="passer12345";
+        // $userReq->setPassword($encoder->encodePassword($userReq,$password));
+        // $userReq->setStatut(0);
+        // //dd($myServices);
+        // $avatar= $myServices->uploadImage($request);
 
-        $userReq->setPhoto($avatar);
-        $manager->persist($userReq);
+        // $userReq->setPhoto($avatar);
+        // $manager->persist($userReq);
+        // $manager->flush();
+        // return $this->json("Apprenant ajouté",Response::HTTP_CREATED);
+
+        $apprenat = $myServices->addNewUser('Apprenant', $request);
+        $manager->persist($apprenat);
         $manager->flush();
-        return $this->json("Apprenant ajouté",Response::HTTP_CREATED);
 
     }
 

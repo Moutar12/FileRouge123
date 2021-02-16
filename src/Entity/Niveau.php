@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\NiveauRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,6 +11,19 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=NiveauRepository::class)
+ *@ApiResource(
+ * collectionOperations={
+*        "get":{
+*              "method":"GET",
+*              "path":"/admin/niveau",
+*              "normalization_context"={"groups":"niveau:read"},
+*              "access_control"="(is_granted('ROLE_ADMIN'))",
+*              "access_control_message"="Vous n'étes pas autorisé à cette ressource"
+*     },
+*
+ *           }
+ *
+  *  )
  */
 class Niveau
 {
@@ -17,7 +31,7 @@ class Niveau
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"cmptcs:read","cmptc:write","cmptcs1:read"})
+     * @Groups({"cmptcsdelete:read","niveau:read","cmptcs:read","cmptc:write","cmptcs1:read"})
      */
     private $id;
 
@@ -34,7 +48,7 @@ class Niveau
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"cmptcs:read","cmptc:write","cmptcs1:read"})
+     * @Groups({"niveau:read","cmptcs:read","cmptc:write","cmptcs1:read"})
      */
     private $libelle;
 

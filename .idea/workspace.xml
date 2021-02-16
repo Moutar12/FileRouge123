@@ -20,18 +20,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4af1eead-da7e-4c9a-963d-a00b487d0d7f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Services/ServiceEmail.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Services/ServicePhoto.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Datapersister/CompetenceDataPersister.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/conventionalCommit.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/filrougeself.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20201231162024.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/PostValidator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210107121906.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210107175423.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210107180534.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210107180700.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210108131101.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ApprenantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ApprenantController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataFixtures/CompetenceFixture.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/CompetenceFixture.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/PromoFixture.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/PromoFixture.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Datapersister/ProfilDataPersister.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Datapersister/ProfilDataPersister.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Apprenant.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Apprenant.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Competence.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Competence.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Groupe.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Groupe.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/GroupeCompetence.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/GroupeCompetence.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Niveau.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Niveau.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Profil.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Profil.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Referentiel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Referentiel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Services/MyService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/MyService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/ServicePhoto.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/ServicePhoto.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,8 +134,6 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/orm" />
       <path value="$PROJECT_DIR$/vendor/doctrine/persistence" />
       <path value="$PROJECT_DIR$/vendor/doctrine/migrations" />
-      <path value="$PROJECT_DIR$/vendor/ocramius/proxy-manager" />
-      <path value="$PROJECT_DIR$/vendor/webimpress/safe-writer" />
       <path value="$PROJECT_DIR$/vendor/symfony/stopwatch" />
       <path value="$PROJECT_DIR$/vendor/symfony/doctrine-bridge" />
       <path value="$PROJECT_DIR$/vendor/symfony/security-guard" />
@@ -150,6 +167,9 @@
       <path value="$PROJECT_DIR$/vendor/lcobucci/jwt" />
       <path value="$PROJECT_DIR$/vendor/lexik/jwt-authentication-bundle" />
       <path value="$PROJECT_DIR$/vendor/namshi/jose" />
+      <path value="$PROJECT_DIR$/vendor/symfony/debug-bundle" />
+      <path value="$PROJECT_DIR$/vendor/friendsofphp/proxy-manager-lts" />
+      <path value="$PROJECT_DIR$/vendor/lcobucci/clock" />
     </include_path>
   </component>
   <component name="ProjectId" id="1kT5CKdr9p1Sf9UFvtyfhHFCEys" />
@@ -171,7 +191,8 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -242,6 +263,24 @@
       <workItem from="1609955933796" duration="7456000" />
       <workItem from="1610012622544" duration="722000" />
       <workItem from="1610017547356" duration="2000" />
+      <workItem from="1610537966273" duration="4368000" />
+      <workItem from="1610622265601" duration="504000" />
+      <workItem from="1610623509458" duration="2216000" />
+      <workItem from="1610794642805" duration="10658000" />
+      <workItem from="1610890149673" duration="5480000" />
+      <workItem from="1610996085935" duration="3137000" />
+      <workItem from="1611047176077" duration="3054000" />
+      <workItem from="1611096825114" duration="1007000" />
+      <workItem from="1611185916057" duration="174000" />
+      <workItem from="1611186111888" duration="61000" />
+      <workItem from="1611186576893" duration="3846000" />
+      <workItem from="1611220605129" duration="1772000" />
+      <workItem from="1611238625462" duration="2289000" />
+      <workItem from="1611254688904" duration="31000" />
+      <workItem from="1611254835339" duration="198000" />
+      <workItem from="1611255046056" duration="12000" />
+      <workItem from="1611269485910" duration="1974000" />
+      <workItem from="1613215242606" duration="334000" />
     </task>
     <servers />
   </component>

@@ -59,6 +59,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      "access_control"="(is_granted('ROLE_ADMIN','FORMATEUR','CM') )",
  *      "access_control_message"="Vous n'étes pas autorisé à cette Ressource",
  *     },
+ *     "sup_grpeCompetence"={
+ *             "method"="Delete",
+ *             "path"="/admin/grpecompetences/{id}",
+ *     },
  *     }
  * )
  */
@@ -68,40 +72,46 @@ class GroupeCompetence
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"grpcmptcs:read","grpcmptcs3:read","referentiel:write","referenciel:read","grcreferenciel:read"})
+     * @Groups({"grpcmptcs:read","grpcmptcs3:read","referentiel:write","referenciel:read","grcreferenciel:read",
+     *      "referenciel:read","grcreferenciels:read","grcreferenciel:read",
+     *      "grcreferenciel_id:read","modfireferenciel:read"})
      */
     private $id;
 
     /**
      * @ORM\ManyToMany(targetEntity=Competence::class, inversedBy="groupeCompetences",cascade={"persist"})
-     *  @Groups({"grpcmptcs:read","cmptcs1:read","grpcmptcs1:read","grpcmptcs2:read","grpcmptcs3:read","grpcmptcs:write","grcreferenciel:read"})
+     *  @Groups({"grpcmptcs:read","cmptcs1:read","grpcmptcs1:read","grpcmptcs2:read","grpcmptcs3:read",
+     *      "grpcmptcs:write","grcreferenciel:read"})
      */
     private $competence;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"grpcmptcs:read","grpcmptcs1:read","grpcmptcs3:read","grpcmptcs:write",
-     *   "referenciel:read","grcreferenciel:read"})
+     *   "referenciel:read","grcreferenciels:read","grcreferenciel:read",
+     *      "grcreferenciel_id:read","modfireferenciel:read"})
      */
     private $libelle;
 
     /**
      * @ORM\ManyToMany(targetEntity=Referentiel::class, mappedBy="groupeCompetence")
-     * @Groups({"referenciel:read"})
+     * @Groups({"referenciel:read","grcreferenciels:read","grcreferenciel:read",
+     *      "grcreferenciel_id:read","modfireferenciel:read"})
      */
     private $referentiels;
 
     /**
      * @ORM\Column(type="string", length=255)
      *@Groups({"grpcmptcs:read","grpcmptcs1:read","grpcmptcs3:read","grpcmptcs:write",
-     *   "referenciel:read","grcreferenciel:read"})
+     *      "referentiel:write","referenciel:read","grcreferenciels:read","grcreferenciel:read",
+     *      "grcreferenciel_id:read","modfireferenciel:read"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $statut = 0;
+    private $statut;
 
     public function __construct()
     {
@@ -200,4 +210,6 @@ class GroupeCompetence
 
         return $this;
     }
+
+
 }

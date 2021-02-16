@@ -15,7 +15,15 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
  * @ORM\Entity(repositoryClass=ApprenantRepository::class)
  *@ApiResource(
  *     collectionOperations={
- *         "addApprenant":{
+ * "get_Apprenants":{
+ *     "method":"GET",
+ *     "path":"/apprenants",
+ *     "normalization_context"={"groups"="apprenant:read"},
+ *     "access_control"="(is_granted('ROLE_ADMIN') )",
+ *     "access_control_message"="Vous n'étes pas autorisé à cette Ressource",
+ *
+ *     },
+ * "addApprenant":{
  *              "method":"POST",
  *              "route_name"="post_apprenant",
  *              "deserialize"=false,
@@ -23,14 +31,7 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
  *              "access_control_message"="Vous n'avez pas access à cette Ressource",
  *
  *     },
- *     "get_Apprenants":{
- *     "method":"GET",
- *     "path":"/apprenants",
- *     "normalization_context"={"groups"="appnt:read"},
- *     "access_control"="(is_granted('ROLE_ADMIN') )",
- *     "access_control_message"="Vous n'étes pas autorisé à cette Ressource",
- *
- *     },
+ *     
  *     },
  *     itemOperations={
 
@@ -62,7 +63,6 @@ class Apprenant extends User
 
     /**
      * @ORM\ManyToMany(targetEntity=Groupe::class, inversedBy="apprenants",cascade="persist")
-     * @Groups({"groupe:read","groupeApp:read"})
      */
     private $groupe;
 

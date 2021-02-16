@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\CompetenceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CompetenceRepository::class)
+ *@ApiFilter (SearchFilter::class, properties={"status": "exact"})
  * @ApiResource(
  * itemOperations={
  *  "Get_competence_1":{
@@ -28,6 +32,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "access_control"="(is_granted('ROLE_ADMIN') )",
  *          "access_control_message"="Vous n'étes pas autorisé à cette Ressource",
  *     },
+ *"sup_competence"={
+   *             "method"="Delete",
+   *             "path"="/admin/competences/{id}",
+   *             "normalization_context"={"groups"="cmptcsdelete:read"},
+   *     },
  *     },
  *     collectionOperations={
  *      "Get_competence":{
@@ -54,7 +63,7 @@ class Competence
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"grpcmptcs:read","cmptcs1:read","grpcmptcs3:read","grpcmptcs2:read","grpcmptcs:write","grpcmptcs:write","grcreferenciel:read"})
+     * @Groups({"cmptcsdelete:read","niveau:read","grpcmptcs:write","grpcmptcs:read", "cmptcs:read","cmptcs1:read","grpcmptcs3:read","grpcmptcs2:read","grpcmptcs:write","grpcmptcs:write","grcreferenciel:read"})
      *
      */
     private $id;
@@ -84,8 +93,14 @@ class Competence
 
     /**
      * @ORM\Column(type="string", length=255)
+     *@Groups({"grpcmptcs:read","cmptcs:read","cmptc:write","cmptcs1:read","grpcmptcs1:read","grpcmptcs2:read","grpcmptcs3:read","grcreferenciel:read"})
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="boolean",nullable=true)
+     */
+    private $status;
 
     public function __construct()
     {
@@ -176,6 +191,18 @@ class Competence
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
